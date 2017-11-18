@@ -113,6 +113,6 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_EXAMPLES=ON \
       -D ENABLE_PRECOMPILED_HEADERS=OFF ..
 
-make -j8
-# sudo make install
-# sudo ldconfig
+make -j4
+sudo make install
+sudo ldconfig
