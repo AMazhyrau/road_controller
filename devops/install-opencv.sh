@@ -1,6 +1,9 @@
+#!/usr/bin/bash
+
 ############################
 # INSTALL OPENCV ON UBUNTU #
 ############################
+
 coloredEcho() {
   local code="\033["
     case "$1" in
@@ -64,24 +67,28 @@ sudo apt-get install -y doxygen
 # 3. INSTALL THE LIBRARY (YOU CAN CHANGE '3.3.1' FOR THE LAST STABLE VERSION)
 coloredEcho cyan "DOWNLOAD OPENCV"
 
+mkdir -p ../tools
+cd ../tools
+
 sudo apt-get install -y unzip wget
+
 wget -O opencv-3.3.1.zip \
   https://github.com/opencv/opencv/archive/3.3.1.zip
 
 unzip opencv-3.3.1.zip
 rm opencv-3.3.1.zip
-mv opencv-3.3.1 ../tools/opencv
+mv opencv-3.3.1 opencv
 
 wget -O opencv_contrib-3.3.1.zip \
   https://github.com/opencv/opencv_contrib/archive/3.3.1.zip
 
 unzip opencv_contrib-3.3.1.zip
 rm opencv_contrib-3.3.1.zip
-mv opencv_contrib-3.3.1 ../tools/opencv_contrib
+mv opencv_contrib-3.3.1 opencv_contrib
 
 coloredEcho cyan "BUILD OPENCV"
-cd ../tools/opencv
-mkdir build
+cd opencv
+mkdir -p build
 cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
@@ -93,7 +100,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D FORCE_VTK=ON \
       -D WITH_V4L2=ON \
       -D WITH_LIBV4L2=ON \
-      -D WITH_FFMPEG=ON\
+      -D WITH_FFMPEG=ON \
       -D WITH_TBB=ON \
       -D WITH_GDAL=ON \
       -D WITH_XINE=ON \
