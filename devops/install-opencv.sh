@@ -49,7 +49,8 @@ sudo apt-get install -y zlib1g-dev libjpeg-dev libwebp-dev libpng-dev \
 coloredEcho yellow "Video I/O:"
 sudo apt-get install -y libdc1394-22-dev libavcodec-dev libavformat-dev \
   libswscale-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev yasm \
-  libopencore-amrnb-dev libopencore-amrwb-dev libv4l-dev libxine2-dev ffmpeg
+  libopencore-amrnb-dev libopencore-amrwb-dev libv4l-dev libxine2-dev \
+  ffmpeg libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
 coloredEcho yellow "Parallelism and linear algebra libraries:"
 sudo apt-get install -y libtbb-dev libeigen3-dev
@@ -92,14 +93,16 @@ mkdir -p build
 cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
-      -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D CMAKE_INSTALL_PREFIX=/usr/local/opencv-3.3.1 \
       -D WITH_QT=ON \
       -D WITH_CUDA=ON \
+      -D CUDA_FAST_MATH=ON \
+      -D WITH_GSTREAMER=ON \
       -D WITH_OPENCL=ON \
       -D WITH_OPENGL=ON \
       -D FORCE_VTK=ON \
-      -D WITH_V4L2=ON \
-      -D WITH_LIBV4L2=ON \
+      -D WITH_V4L=ON \
+      -D WITH_LIBV4L=ON \
       -D WITH_FFMPEG=ON \
       -D WITH_TBB=ON \
       -D WITH_GDAL=ON \
@@ -110,6 +113,6 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_EXAMPLES=ON \
       -D ENABLE_PRECOMPILED_HEADERS=OFF ..
 
-make -j4
+make -j8
 # sudo make install
 # sudo ldconfig
