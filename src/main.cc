@@ -18,8 +18,6 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  cv::namedWindow("Lane Lines detection", cv::WINDOW_AUTOSIZE);
-
   for(;;)
   {
     cv::Mat frame;
@@ -29,7 +27,7 @@ int main() {
 
     LaneDetectorStrategy<BasicLaneDetector> detector;
     cv::Mat edges = detector.useStrategy(frame);
-    cv::imshow("edges", edges);
+    cv::imshow("Lane Lines detection", edges);
 
     if(cv::waitKey(15) >= 0) break;
   }
