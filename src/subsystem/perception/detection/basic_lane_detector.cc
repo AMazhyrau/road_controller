@@ -45,8 +45,25 @@ cv::Mat BasicLaneDetector::normalizeImage(const cv::Mat &frame) {
 }
 
 cv::Mat BasicLaneDetector::cropImage(const cv::Mat& image) {
-  // FIXME: implement crop method;
-  return image;
+  int height = image.rows;
+  int width = image.cols;
+
+  cv::Mat mask = cv::Mat::zeros(image.size(), CV_8UC3);
+
+  cv::Point bottomLeft(0, height);
+  cv::Point bottomRight(width, height);
+  cv::Point topLeft(width/2-50, height/2+60);
+  cv::Point topRight(width/2+50, height/2+60);
+
+  std::vector<cv::Point> vertices {bottomLeft, topLeft, topRight, bottomRight};
+  std::vector<std::vector<cv::Point>> contours {vertices};
+
+  cv::drawContours(mask, contours, 0, cv::Scalar::all(255), CV_FILLED, cv::LINE_8);
+
+  cv::Mat output;
+  image.copyTo(output, mask);
+
+  return output;
 }
 
 std::vector<cv::Vec4i> BasicLaneDetector::detectLaneLines(const cv::Mat& image) {
